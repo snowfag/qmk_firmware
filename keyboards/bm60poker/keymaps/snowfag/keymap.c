@@ -39,7 +39,8 @@ enum td_keycodes {
     TD_SS_WINDOW,
     TD_SS_FULL,
     TD_SS_REGION,
-    TD_CAPS_KANA
+    TD_CAPS_KANA,
+    TD_SPCFN,
 };
 
 typedef struct {
@@ -56,14 +57,14 @@ enum {
 
 uint8_t cur_dance(qk_tap_dance_state_t *state);
 
-#define KC_SPFN LT(_spcfn, KC_SPC)
-
+//#define KC_SPFN LT(_spcfn, KC_SPC)
+#define KC_SPFN TD(TD_SPCFN)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_qwerty] = LAYOUT_60_ansi(
         KC_GESC,        KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC,
         KC_TAB,         KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,
-        TD(TD_CAPS_KANA), KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,          KC_ENT,
+        TD(TD_CAPS_KANA), KC_A,  KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,          KC_ENT,
         KC_LSPO,                 KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          KC_RSPC,
         KC_LCTL,        KC_LGUI, KC_LALT,                            KC_SPFN,                            KC_RALT, KC_RCTL, MO(_fn),   MO(_rgb)
     ),
@@ -118,7 +119,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_CAPS_KANA):
             return TAPPING_TERM + 25;
         case KC_SPFN:
-            return 175;
+            return 120;
         default:
             return TAPPING_TERM;
     }
@@ -161,6 +162,43 @@ uint8_t cur_dance(qk_tap_dance_state_t *state) {
         else return DOUBLE_HOLD;
     }
     else return 8;
+}
+
+static tap spcfn_tap_state = {
+    .is_press_action = true,
+    .state = 0
+};
+
+void spcfn_finished(qk_tap_dance_state_t *state, void *user_data) {
+    spcfn_tap_state.state = cur_dance(state);
+    switch (spcfn_tap_state.state) {
+        case SINGLE_TAP:
+            tap_code(KC_SPC);
+            break;
+        case SINGLE_HOLD:
+            layer_clear();
+            layer_on(_spcfn);
+            break;
+        case DOUBLE_TAP:
+            tap_code(KC_SPC);
+            tap_code(KC_SPC);
+            break;
+        case DOUBLE_HOLD:
+            tap_code(KC_SPC);
+            layer_clear();
+            layer_on(_spcfn);
+    }
+}
+
+void spcfn_reset(qk_tap_dance_state_t *state, void *user_data) {
+    switch (spcfn_tap_state.state) {
+        case SINGLE_HOLD:
+            layer_off(_spcfn);
+            break;
+        case DOUBLE_HOLD:
+            layer_off(_spcfn);
+            break;
+    }
 }
 
 static tap caps_kana_tap_state = {
@@ -295,6 +333,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_SS_FULL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_sful_finished, dance_sful_reset),
     [TD_SS_REGION] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_sreg_finished, dance_sreg_reset),
     [TD_CAPS_KANA] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_caps_kana_finished, dance_caps_kana_reset),
+    [TD_SPCFN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, spcfn_finished, spcfn_reset),
 };
 
 void rgb_matrix_layer_helper (uint8_t red, uint8_t green, uint8_t blue) {
