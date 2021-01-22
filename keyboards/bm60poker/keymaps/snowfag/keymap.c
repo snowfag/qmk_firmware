@@ -31,7 +31,7 @@ enum layers {
 enum keycodes {
     gaymen = SAFE_RANGE,
     qwerty,
-    voip
+    voip,
 };
 
 enum td_keycodes {
@@ -40,7 +40,6 @@ enum td_keycodes {
     TD_SS_FULL,
     TD_SS_REGION,
     TD_CAPS_KANA,
-    TD_SPCFN,
 };
 
 typedef struct {
@@ -57,8 +56,7 @@ enum {
 
 uint8_t cur_dance(qk_tap_dance_state_t *state);
 
-//#define KC_SPFN LT(_spcfn, KC_SPC)
-#define KC_SPFN TD(TD_SPCFN)
+#define KC_SPFN LT(_spcfn, KC_SPC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_qwerty] = LAYOUT_60_ansi(
@@ -84,31 +82,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_fn] = LAYOUT_60_ansi(
         KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,
-        _______, _______, KC_UP,   _______, _______, _______, _______, _______, KC_INS,  _______, KC_PSCR, KC_SLCK, KC_PAUS, RESET,
-        _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGUP,          _______,
-        _______,          _______, _______, _______, _______, _______, NK_TOGG, _______, _______, KC_END,  KC_PGDN,          _______,
-        qwerty,  voip, gaymen,                             _______,                            _______, _______, _______, _______
+        KC_NO, KC_NO, KC_NO,   KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_INS,  KC_NO, KC_PSCR, KC_SLCK, KC_PAUS, RESET,
+        KC_NO, A(KC_F23), KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_HOME, KC_PGUP,          KC_NO,
+        _______,          KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, NK_TOGG, KC_NO, KC_NO, KC_END,  KC_PGDN,       _______,
+        qwerty,  voip, gaymen,                             KC_NO,                            KC_NO, KC_NO, KC_NO, KC_NO
     ),
     [_fn2] = LAYOUT_60_ansi(
         KC_GRV,  KC_F1,     KC_F2,   KC_F3,   KC_F4,   KC_F5,     KC_F6,   KC_F7,   KC_F8,      KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,
-        _______, _______,   _______, _______, _______, A(KC_F22), KC_JYEN, _______, KC_INS,     _______, KC_PSCR, KC_SLCK, KC_PAUS, RESET,
-        _______, A(KC_F23), _______, _______, _______, _______,   _______, _______, C(S(KC_K)), _______, KC_HOME, KC_PGUP,          A(KC_F24),
-        _______,            _______, _______, KC_CALC, _______,   _______, _______, _______,    _______, KC_END,  KC_PGDN,          _______,
+        KC_NO, KC_NO,   KC_NO, KC_NO, KC_NO, A(KC_F22), KC_JYEN, KC_NO, KC_INS,     KC_NO, KC_NO, KC_NO, KC_NO, MEH(KC_F1),
+        _______, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_NO, KC_NO,          A(KC_F24),
+        _______,            KC_NO, KC_NO, KC_CALC, KC_NO,   KC_NO, KC_NO, KC_NO,    KC_NO, KC_END,  KC_PGDN,        _______,
         _______, _______,   _______,                              _______,                               _______, _______, _______, _______
     ),
     [_rgb] = LAYOUT_60_ansi(
-        _______, KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_F21,  KC_F22,  KC_F23,  KC_F24,  KC_DEL,
-        _______, RGB_TOG, _______, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, RGB_MOD, _______, _______, _______, RESET,
-        _______, _______, _______, _______, _______, _______, _______, _______, RGB_SPI, RGB_SPD, _______, _______,          _______,
-        _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
-        _______, _______, _______,                            _______,                            _______, _______, _______, _______
+        KC_NO, KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_F21,  KC_F22,  KC_F23,  KC_F24,  KC_DEL,
+        KC_NO, RGB_TOG, KC_NO, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, RGB_MOD, KC_NO, KC_NO, KC_NO, RESET,
+        KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, RGB_SPI, RGB_SPD, KC_NO, KC_NO,          KC_NO,
+        _______,          KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,          _______,
+        _______, _______,   _______,                              _______,                               _______, _______, _______, _______
     ),
     [_spcfn] = LAYOUT_60_ansi(
-        _______, TD(TD_CLIP_UPLOAD), TD(TD_SS_WINDOW), TD(TD_SS_FULL), TD(TD_SS_REGION), HYPR(KC_F18), LCAG(KC_F18), LCAG(KC_F19),  LCAG(KC_F20), LCAG(KC_F21), LCAG(KC_F22), LCAG(KC_F23), LCAG(KC_F24), KC_DEL,
-        _______, _______, KC_PGUP, _______, _______, KC_LBRC, KC_RBRC,  _______, KC_UP,   _______, _______, _______,  _______, _______,
-        KC_CAPS, KC_HOME, KC_PGDN, KC_END,  _______, KC_LCBR, KC_RCBR,  KC_LEFT, KC_DOWN, KC_RIGHT, _______, _______,          _______,
-        _______,          _______, C(KC_X), C(S(KC_C)), S(KC_INS), _______, _______,  _______, KC_MPRV, KC_MNXT, KC_MPLY,           _______,
-        _______, _______, _______,                            _______,                            _______, _______, _______, _______
+        KC_NO, TD(TD_CLIP_UPLOAD), TD(TD_SS_WINDOW), TD(TD_SS_FULL), TD(TD_SS_REGION), HYPR(KC_F18), LCAG(KC_F18), LCAG(KC_F19),  LCAG(KC_F20), LCAG(KC_F21), LCAG(KC_F22), LCAG(KC_F23), LCAG(KC_F24), KC_DEL,
+        KC_NO, KC_NO, KC_PGUP, KC_NO, KC_NO, KC_LBRC, KC_RBRC,  KC_NO, KC_UP,   KC_NO, KC_NO, KC_NO,  KC_NO, KC_NO,
+        KC_NO,  KC_HOME, KC_PGDN, KC_END,  KC_NO, KC_LCBR, KC_RCBR,  KC_LEFT, KC_DOWN, KC_RIGHT, KC_NO, KC_NO,          KC_NO,
+        _______,          KC_NO, C(KC_X), C(S(KC_C)), S(KC_INS), KC_NO, KC_NO,  KC_NO, KC_MPRV, KC_MNXT, KC_MPLY,           _______,
+        _______, _______,   _______,                              _______,                               _______, _______, _______, _______
     )
 };
 
@@ -119,9 +117,27 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_CAPS_KANA):
             return TAPPING_TERM + 25;
         case KC_SPFN:
-            return 120;
+            return 175;
         default:
             return TAPPING_TERM;
+    }
+}
+
+bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case KC_SPFN:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case KC_SPFN:
+            return true;
+        default:
+            return false;
     }
 }
 
@@ -162,43 +178,6 @@ uint8_t cur_dance(qk_tap_dance_state_t *state) {
         else return DOUBLE_HOLD;
     }
     else return 8;
-}
-
-static tap spcfn_tap_state = {
-    .is_press_action = true,
-    .state = 0
-};
-
-void spcfn_finished(qk_tap_dance_state_t *state, void *user_data) {
-    spcfn_tap_state.state = cur_dance(state);
-    switch (spcfn_tap_state.state) {
-        case SINGLE_TAP:
-            tap_code(KC_SPC);
-            break;
-        case SINGLE_HOLD:
-            layer_clear();
-            layer_on(_spcfn);
-            break;
-        case DOUBLE_TAP:
-            tap_code(KC_SPC);
-            tap_code(KC_SPC);
-            break;
-        case DOUBLE_HOLD:
-            tap_code(KC_SPC);
-            layer_clear();
-            layer_on(_spcfn);
-    }
-}
-
-void spcfn_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (spcfn_tap_state.state) {
-        case SINGLE_HOLD:
-            layer_off(_spcfn);
-            break;
-        case DOUBLE_HOLD:
-            layer_off(_spcfn);
-            break;
-    }
 }
 
 static tap caps_kana_tap_state = {
@@ -333,8 +312,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_SS_FULL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_sful_finished, dance_sful_reset),
     [TD_SS_REGION] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_sreg_finished, dance_sreg_reset),
     [TD_CAPS_KANA] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_caps_kana_finished, dance_caps_kana_reset),
-    [TD_SPCFN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, spcfn_finished, spcfn_reset),
 };
+
 
 void rgb_matrix_layer_helper (uint8_t red, uint8_t green, uint8_t blue) {
     for (int i = 0; i < DRIVER_LED_TOTAL; i++) {
@@ -344,44 +323,43 @@ void rgb_matrix_layer_helper (uint8_t red, uint8_t green, uint8_t blue) {
     }
 }
 
-
 void rgb_matrix_indicators_kb(void) {
 	if (!g_suspend_state && rgb_matrix_config.enable) {
         switch (get_highest_layer(layer_state)) {
             //case _qwerty:
-            //    rgb_matrix_set_color(26, 0xFF, 0x00, 0x00);
+            //    rgb_matrix_set_color(26, 0xFF, 0x00, 0x00); // #FF0000
             //    break;
             case _spcfn:
-                rgb_matrix_set_color(22, 0xFF, 0xFF, 0xFF);
-                rgb_matrix_set_color(35, 0xFF, 0xFF, 0xFF);
-                rgb_matrix_set_color(36, 0xFF, 0xFF, 0xFF);
-                rgb_matrix_set_color(37, 0xFF, 0xFF, 0xFF);
-                rgb_matrix_set_color(16, 0xFF, 0xFF, 0x00);
-                rgb_matrix_set_color(29, 0xFF, 0xFF, 0x00);
-                rgb_matrix_set_color(30, 0xFF, 0xFF, 0x00);
-                rgb_matrix_set_color(31, 0xFF, 0xFF, 0x00);
-                rgb_matrix_set_color(49, 0x00, 0xFF, 0x00);
-                rgb_matrix_set_color(50, 0x00, 0xFF, 0x00);
-                rgb_matrix_set_color(51, 0x00, 0xFF, 0x00);
+                rgb_matrix_set_color(22, 0xFF, 0xFF, 0xFF); // #FFFFFF
+                rgb_matrix_set_color(35, 0xFF, 0xFF, 0xFF); // #FFFFFF
+                rgb_matrix_set_color(36, 0xFF, 0xFF, 0xFF); // #FFFFFF
+                rgb_matrix_set_color(37, 0xFF, 0xFF, 0xFF); // #FFFFFF
+                rgb_matrix_set_color(16, 0xFF, 0xFF, 0x00); // #FFFF00
+                rgb_matrix_set_color(29, 0xFF, 0xFF, 0x00); // #FFFF00
+                rgb_matrix_set_color(30, 0xFF, 0xFF, 0x00); // #FFFF00
+                rgb_matrix_set_color(31, 0xFF, 0xFF, 0x00); // #FFFF00
+                rgb_matrix_set_color(49, 0x00, 0xFF, 0x00); // #00FF00
+                rgb_matrix_set_color(50, 0x00, 0xFF, 0x00); // #00FF00
+                rgb_matrix_set_color(51, 0x00, 0xFF, 0x00); // #00FF00
                 break;
             case _gaymen:
-                rgb_matrix_set_color(16, 0xFF, 0x00, 0x00);
-                rgb_matrix_set_color(29, 0xFF, 0x00, 0x00);
-                rgb_matrix_set_color(30, 0xFF, 0x00, 0x00);
-                rgb_matrix_set_color(31, 0xFF, 0x00, 0x00);
+                rgb_matrix_set_color(16, 0xFF, 0x00, 0x00); // #FF0000
+                rgb_matrix_set_color(29, 0xFF, 0x00, 0x00); // #FF0000
+                rgb_matrix_set_color(30, 0xFF, 0x00, 0x00); // #FF0000
+                rgb_matrix_set_color(31, 0xFF, 0x00, 0x00); // #FF0000
                 break;
             case _fn2:
-                rgb_matrix_set_color(40, 0xFF, 0x00, 0x00);
-                rgb_matrix_set_color(28, 0xFF, 0xFF, 0xFF);
+                rgb_matrix_set_color(40, 0xFF, 0x00, 0x00); // #FF0000
+                rgb_matrix_set_color(28, 0xFF, 0xFF, 0xFF); // #FFFFFF
                 break;
         }
         led_t led_state = host_keyboard_led_state();
         if (kana_tog && !led_state.caps_lock) {
-            rgb_matrix_set_color(28, 0x00, 0xFF, 0x00);
+            rgb_matrix_set_color(28, 0x00, 0xFF, 0x00); // #00FF00
         } else if (!kana_tog && led_state.caps_lock) {
-            rgb_matrix_set_color(28, 0xFF, 0x00, 0x00);
+            rgb_matrix_set_color(28, 0xFF, 0x00, 0x00); // #FF0000
         } else if (kana_tog && led_state.caps_lock) {
-            rgb_matrix_set_color(28, 0xFF, 0xFF, 0x00);
+            rgb_matrix_set_color(28, 0xFF, 0xFF, 0x00); // #FFFF00
         }
     }
 }
