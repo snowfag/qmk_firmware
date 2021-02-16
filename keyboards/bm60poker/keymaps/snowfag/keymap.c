@@ -314,6 +314,19 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CAPS_KANA] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_caps_kana_finished, dance_caps_kana_reset),
 };
 
+void keyboard_post_init_user(void) {
+#if defined(RGB_MATRIX_ENABLE)
+    if (rgb_matrix_is_enabled()) {
+        uint16_t old_hue = rgb_matrix_get_hue();
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_ALPHAS_MODS);
+        for (uint16_t i = 255; i > 0; i--) {
+            rgb_matrix_sethsv_noeeprom( ( i + old_hue) % 255, 255, 255);
+            matrix_scan();
+            wait_ms(10);
+        }
+    }
+#endif
+}
 
 void rgb_matrix_layer_helper (uint8_t red, uint8_t green, uint8_t blue) {
     for (int i = 0; i < DRIVER_LED_TOTAL; i++) {
