@@ -152,7 +152,7 @@ __attribute__((weak)) void process_mouse(report_mouse_t* mouse_report) {
 }
 
 bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
-    if (true) {
+    if (false) {
         xprintf("KL: kc: %u, col: %u, row: %u, pressed: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed);
     }
 

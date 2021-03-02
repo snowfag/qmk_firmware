@@ -1,1 +1,2 @@
 BOOTLOADER = qmk-dfu
+TAP_DANCE_ENABLE = yes
