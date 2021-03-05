@@ -216,9 +216,9 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 void process_wheel_user(report_mouse_t* mouse_report, int16_t h, int16_t v) {
     if (tab_switch) {
-        if (v > 1) {
+        if (v ==  255) {
             tap_code16(A(KC_PGDN));
-        } else if (-v > 1 ) {
+        } else if (v == 1 ) {
             tap_code16(A(KC_PGUP));
         }
     } else if (wheel_h_scroll) {
