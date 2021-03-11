@@ -65,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_BTN1, KC_BTN3, KC_BTN2, TD(td_fn), TD(td_fn2)
     ),
     [Fn] = LAYOUT(
-        KC_BTN1, C(KC_W), C(KC_PGUP), KC_TRNS, LT(Fn3, KC_F14)
+        KC_BTN1, C(KC_W), MEH(KC_F17), KC_TRNS, LT(Fn3, KC_F14)
     ),
     [Fn2] = LAYOUT(
         KC_BTN1, DPI_CONFIG, KC_BTN2, MO(Fn4), KC_TRNS
